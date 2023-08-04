@@ -11,7 +11,7 @@ export default function Auth({ type }) {
         <CenterContainer>
           <section className="auth" aria-label="Вход">
             <Logo />
-            <h2 className="auth__title">{type === 'signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h2>
+            <h1 className="auth__title">{type === 'signin' ? 'Рады видеть!' : 'Добро пожаловать!'}</h1>
             <form className="auth__form">
               {type !== 'signin' && (
                 <label className="auth__label">
@@ -29,7 +29,7 @@ export default function Auth({ type }) {
                 {type !== 'signin' && <span className="auth__error">Что-то пошло не так...</span>}
               </label>
               <div className="auth__buttons-wrapper">
-                <button className="auth__button button">
+                <button type="submit" className="auth__button button">
                   {type === 'signin' ? 'Войти' : 'Зарегистрироваться'}
                 </button>
                 <div className="auth__link-wrapper">

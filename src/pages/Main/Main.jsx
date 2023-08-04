@@ -1,5 +1,6 @@
 import AboutMe from '../../components/AboutMe/AboutMe';
 import AboutProject from '../../components/AboutProject/AboutProject';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import MainStyled from '../../components/MainStyled/MainStyled';
 import NavTab from '../../components/NavTab/NavTab';
@@ -21,6 +22,8 @@ export default function Main() {
         <AboutMe />
         <Portfolio />
       </MainStyled>
+
+      <Footer />
     </>
   );
 }

@@ -67,12 +67,6 @@
   }
 }
 
-@media screen and (max-width: 550px) {
-  .techs__list {
-    justify-content: flex-start;
-  }
-}
-
 @media screen and (max-width: 450px) {
   .techs {
     padding: 70px 8px;
@@ -95,6 +89,7 @@
   }
 
   .techs__list {
+    justify-content: flex-start;
     max-width: 178px;
     margin: 0 auto;
   }

@@ -4,8 +4,10 @@ import MainStyled from '../../components/MainStyled/MainStyled';
 import { useState } from 'react';
 import './Profile.css';
 import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
 
   const onDisabled = (evt) => {
@@ -20,7 +22,7 @@ export default function Profile() {
       <MainStyled>
         <section className="profile" aria-label="Профиль">
           <CenterContainer>
-            <h2 className="profile__title">Привет, Матвей!</h2>
+            <h1 className="profile__title">Привет, Матвей!</h1>
             <form onSubmit={onDisabled} className="profile__form">
               <div>
                 <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
@@ -38,10 +40,14 @@ export default function Profile() {
                 </label>
               </div>
               <div className="profile__button-wrapper">
-                <button className="profile__button profile__button_type_edit-save button">
+                <button type="submit" className="profile__button profile__button_type_edit-save button">
                   {isDisabled ? 'Редактировать' : 'Сохранить'}
                 </button>
-                <button type="button" className="profile__button profile__button_type_logout button">
+                <button
+                  onClick={() => navigate('/')}
+                  type="button"
+                  className="profile__button profile__button_type_logout button"
+                >
                   Выйти из аккаунта
                 </button>
               </div>

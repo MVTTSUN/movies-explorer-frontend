@@ -15,7 +15,7 @@ export default function Error404() {
       <MainStyled>
         <section className="error404" aria-label="Страница 404">
           <CenterContainer>
-            <h2 className="error404__title">404</h2>
+            <h1 className="error404__title">404</h1>
             <p className="error404__text">Страница не найдена</p>
             <button onClick={goBack} className="error404__button button" type="button">
               Назад

@@ -5,7 +5,6 @@ import Movies from '../../pages/Movies/Movies';
 import SavedMovies from '../../pages/SavedMovies/SavedMovies';
 import Profile from '../../pages/Profile/Profile';
 import Error404 from '../../pages/Error404/Error404';
-import Footer from '../Footer/Footer';
 import Auth from '../../pages/Auth/Auth';
 
 export default function App() {
@@ -22,8 +21,6 @@ export default function App() {
           <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
-
-      <Footer />
     </BrowserRouter>
   );
 }

@@ -21,7 +21,7 @@ export default function Navigation({ isLogin }) {
     <>
       <nav className="header__nav">
         <Logo />
-        <div className={clsx('header__options', isLogin && 'header__options_login')}>
+        <nav className={clsx('header__options', isLogin && 'header__options_login')}>
           {isLogin ? (
             !isMediumScreen && (
               <>
@@ -53,7 +53,7 @@ export default function Navigation({ isLogin }) {
               </Link>
             </>
           )}
-        </div>
+        </nav>
         {isLogin && (
           <>
             {!isMediumScreen ? (
@@ -69,30 +69,38 @@ export default function Navigation({ isLogin }) {
       <aside className={clsx('header__overlay', isOpenBurger && 'header__overlay_active')}>
         <nav className={clsx('header__nav-mobile', isOpenBurger && 'header__nav-mobile_active')}>
           <button onClick={closeBurger} className="header__button-close button" type="button"></button>
-          <NavLink
-            className={({ isActive }) =>
-              clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
-            }
-            to="/"
-          >
-            Главная
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
-            }
-            to="/movies"
-          >
-            Фильмы
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
-            }
-            to="/saved-movies"
-          >
-            Сохранённые фильмы
-          </NavLink>
+          <ul className="header__burger-list list">
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
+                }
+                to="/"
+              >
+                Главная
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
+                }
+                to="/movies"
+              >
+                Фильмы
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  clsx('header__burger-link', 'link', isActive && 'header__burger-link_active')
+                }
+                to="/saved-movies"
+              >
+                Сохранённые фильмы
+              </NavLink>
+            </li>
+          </ul>
           <Link className="header__link header__link_type_profile link" to="/profile">
             Аккаунт
           </Link>
