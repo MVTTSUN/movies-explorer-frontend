@@ -97,6 +97,6 @@ const FILMS = [
   },
 ];
 
-const URL = 'https://api.beatfilms.mvtt.nomoreparties.co';
+const URL = 'http://localhost:3000';
 
 export { FILMS, URL };
