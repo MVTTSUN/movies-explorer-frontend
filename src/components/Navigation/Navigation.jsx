@@ -7,7 +7,7 @@ import { useResize } from '../../hooks/useResize';
 
 export default function Navigation({ isLogin }) {
   const [isOpenBurger, setIsOpenBurger] = useState(false);
-  const { isMediumScreen } = useResize();
+  const { isLargeScreen } = useResize();
 
   const openBurger = () => {
     setIsOpenBurger(true);
@@ -21,9 +21,9 @@ export default function Navigation({ isLogin }) {
     <>
       <nav className="header__nav">
         <Logo />
-        <nav className={clsx('header__options', isLogin && 'header__options_login')}>
+        <div className={clsx('header__options', isLogin && 'header__options_login')}>
           {isLogin ? (
-            !isMediumScreen && (
+            isLargeScreen && (
               <>
                 <NavLink
                   className={({ isActive }) =>
@@ -53,10 +53,10 @@ export default function Navigation({ isLogin }) {
               </Link>
             </>
           )}
-        </nav>
+        </div>
         {isLogin && (
           <>
-            {!isMediumScreen ? (
+            {isLargeScreen ? (
               <Link className="header__link header__link_type_profile link" to="/profile">
                 Аккаунт
               </Link>

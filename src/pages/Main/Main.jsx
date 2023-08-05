@@ -9,10 +9,10 @@ import Promo from '../../components/Promo/Promo';
 import Techs from '../../components/Techs/Techs';
 import './Main.css';
 
-export default function Main() {
+export default function Main({ isLogin }) {
   return (
     <>
-      <Header />
+      <Header isLogin={isLogin} />
 
       <MainStyled>
         <Promo />

@@ -1,19 +1,55 @@
 import CenterContainer from '../../components/CenterContainer/CenterContainer';
 import Header from '../../components/Header/Header';
 import MainStyled from '../../components/MainStyled/MainStyled';
-import { useState } from 'react';
 import './Profile.css';
-import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import { updateUserInfo } from '../../utils/MainApi';
+import { useContext, useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Modal from '../../components/Modal/Modal';
 
-export default function Profile() {
-  const navigate = useNavigate();
+export default function Profile({ getUserInfoHandler, exitProfile }) {
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [serverError, setServerError] = useState('');
 
-  const onDisabled = (evt) => {
-    evt.preventDefault();
-    setIsDisabled(!isDisabled);
+  const handleName = (evt) => {
+    setName(evt.target.value);
   };
+
+  const handleEmail = (evt) => {
+    setEmail(evt.target.value);
+  };
+
+  const checkEdit = (currName, currEmail) => {
+    if (currName !== name || currEmail !== email) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
+
+  const onEdit = (evt) => {
+    evt.preventDefault();
+    updateUserInfo({ name, email })
+      .then(({ name, email }) => {
+        getUserInfoHandler();
+        checkEdit(name, email);
+      })
+      .catch((err) => {
+        setServerError(err);
+      });
+  };
+
+  useEffect(() => {
+    checkEdit(currentUser.name, currentUser.email);
+  }, [name, email]);
+
+  useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser.name, currentUser.email]);
 
   return (
     <>
@@ -22,29 +58,28 @@ export default function Profile() {
       <MainStyled>
         <section className="profile" aria-label="Профиль">
           <CenterContainer>
-            <h1 className="profile__title">Привет, Матвей!</h1>
-            <form onSubmit={onDisabled} className="profile__form">
+            <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+            <form onSubmit={onEdit} className="profile__form">
               <div>
-                <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
+                <label className="profile__label">
                   <span className="profile__label-text">Имя</span>
-                  <input type="text" className="profile__input" value="Матвей" disabled={isDisabled} />
+                  <input onChange={handleName} value={name} type="text" className="profile__input" />
                 </label>
-                <label className={clsx('profile__label', isDisabled && 'profile__label_disabled')}>
+                <label className="profile__label">
                   <span className="profile__label-text">E-mail</span>
-                  <input
-                    type="text"
-                    className="profile__input"
-                    value="pochta@yandex.ru"
-                    disabled={isDisabled}
-                  />
+                  <input onChange={handleEmail} value={email} type="text" className="profile__input" />
                 </label>
               </div>
               <div className="profile__button-wrapper">
-                <button type="submit" className="profile__button profile__button_type_edit-save button">
-                  {isDisabled ? 'Редактировать' : 'Сохранить'}
+                <button
+                  type="submit"
+                  disabled={isDisabled}
+                  className="profile__button profile__button_type_edit-save button"
+                >
+                  Редактировать
                 </button>
                 <button
-                  onClick={() => navigate('/')}
+                  onClick={exitProfile}
                   type="button"
                   className="profile__button profile__button_type_logout button"
                 >
@@ -55,6 +90,7 @@ export default function Profile() {
           </CenterContainer>
         </section>
       </MainStyled>
+      {serverError && <Modal>{serverError}</Modal>}
     </>
   );
 }
