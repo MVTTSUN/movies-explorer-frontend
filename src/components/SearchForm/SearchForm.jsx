@@ -28,6 +28,7 @@ export default function SearchForm({
     formState: { errors },
     handleSubmit,
     setValue,
+    getValues,
   } = useForm({
     resolver: pathname === '/saved-movies' ? null : yupResolver(queryFilmsSchema),
   });
@@ -84,7 +85,7 @@ export default function SearchForm({
           </div>
           <label className="search-form__label-tumbler">
             <input
-              onChange={handleCheckShortFilms}
+              onChange={() => handleCheckShortFilms(getValues('queryFilms'))}
               checked={pathname === '/movies' ? checkShortFilms : checkShortFilmsSaved}
               type="checkbox"
               className="search-form__tumbler"

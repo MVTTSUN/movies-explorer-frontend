@@ -68,11 +68,13 @@ export default function Movies() {
     }
   };
 
-  const handleCheckShortFilms = () => {
+  const handleCheckShortFilms = (query) => {
     if (pathname === '/movies') {
+      localStorage.setItem('queryFilms', query);
       localStorage.setItem('isShortFilms', !checkShortFilms);
       setCheckShortFilms(!checkShortFilms);
     } else {
+      localStorage.setItem('queryFilmsSaved', query);
       localStorage.setItem('isShortFilmsSaved', !checkShortFilmsSaved);
       setCheckShortFilmsSaved(!checkShortFilmsSaved);
     }
@@ -80,7 +82,7 @@ export default function Movies() {
 
   useEffect(() => {
     if (localStorage.getItem('queryFilms')) {
-      handleSetFilms(localStorage.getItem('queryFilms'));
+      handleSetFilms(localStorage.getItem('queryFilms') || '');
     }
   }, [checkShortFilms]);
 
