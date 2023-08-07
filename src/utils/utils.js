@@ -4,18 +4,26 @@ const searchFilms = (filmsData, query, checkShortFilms, checkShortFilmsSaved) =>
   if (query !== null) {
     filmsFilter = filmsData.filter(
       (film) =>
-        film.nameRU.trim().match(RegExp(`^${query.trim()}`, 'i')) ||
-        film.nameEN.trim().match(RegExp(`^${query.trim()}`, 'i')) ||
+        film.nameRU
+          .trim()
+          .split(' ')
+          .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
+        film.nameEN
+          .trim()
+          .split(' ')
+          .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
         film.nameRU
           .trim()
           .split(/[.,/?'"!@#$%^&*()_+~`№^;:&|<>\-=\\{}«»[]/)
           .join('')
-          .match(RegExp(`^${query.trim()}`, 'i')) ||
+          .split(' ')
+          .some((word) => word.match(RegExp(`^${query.trim()}`, 'i'))) ||
         film.nameEN
           .trim('')
           .split(/[.,/?'"!@#$%^&*()_+~`№^;:&|<>\-=\\{}«»[]/)
           .join('')
-          .match(RegExp(`^${query.trim()}`, 'i'))
+          .split(' ')
+          .some((word) => word.match(RegExp(`^${query.trim()}`, 'i')))
     );
   } else {
     filmsFilter = filmsData;
