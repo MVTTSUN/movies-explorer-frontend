@@ -13,6 +13,7 @@ export default function Profile({ getUserInfoHandler, exitProfile }) {
   const [email, setEmail] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const [serverError, setServerError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleName = (evt) => {
     setName(evt.target.value);
@@ -36,6 +37,7 @@ export default function Profile({ getUserInfoHandler, exitProfile }) {
       .then(({ name, email }) => {
         getUserInfoHandler();
         checkEdit(name, email);
+        setSuccessMessage('Данные успешно обновлены');
       })
       .catch((err) => {
         setServerError(err);
@@ -91,6 +93,7 @@ export default function Profile({ getUserInfoHandler, exitProfile }) {
         </section>
       </MainStyled>
       {serverError && <Modal>{serverError}</Modal>}
+      {successMessage && <Modal>{successMessage}</Modal>}
     </>
   );
 }
