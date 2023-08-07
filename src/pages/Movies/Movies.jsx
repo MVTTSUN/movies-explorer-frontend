@@ -100,6 +100,12 @@ export default function Movies() {
     }
   }, [filmsSaved]);
 
+  useEffect(() => {
+    if (pathname === '/saved-movies' && !localStorage.getItem('isShortFilmsSaved')) {
+      handleSetFilms(localStorage.getItem(''));
+    }
+  }, [pathname]);
+
   return (
     <>
       <Header isLogin />
