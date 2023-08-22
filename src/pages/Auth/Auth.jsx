@@ -22,6 +22,10 @@ export default function Auth({ setIsLogin }) {
 
   const onSubmit = (data) => {
     if (pathname === '/signin') {
+      if (data.name) {
+        delete data.name;
+      }
+
       login(data)
         .then(() => {
           setIsLogin(true);
