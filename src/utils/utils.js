@@ -1,7 +1,7 @@
 const searchFilms = (filmsData, query, checkShortFilms, checkShortFilmsSaved) => {
   let filmsFilter;
 
-  if (query !== null) {
+  if (query !== null && Array.isArray(filmsData)) {
     filmsFilter = filmsData.filter(
       (film) =>
         film.nameRU
@@ -25,7 +25,9 @@ const searchFilms = (filmsData, query, checkShortFilms, checkShortFilmsSaved) =>
           .split(' ')
           .some((word) => word.match(RegExp(`^${query.trim()}`, 'i')))
     );
-  } else {
+  }
+
+  if (query === '') {
     filmsFilter = filmsData;
   }
 

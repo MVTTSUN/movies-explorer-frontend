@@ -55,16 +55,11 @@ export default function SearchForm({
     } else {
       handleSetFilms(data.queryFilms);
       setIsNothingFound(true);
-      localStorage.setItem('queryFilmsSaved', data.queryFilms ? data.queryFilms : '');
-      localStorage.setItem('isShortFilmsSaved', checkShortFilmsSaved);
     }
   };
 
   useEffect(() => {
-    setValue(
-      'queryFilms',
-      pathname === '/movies' ? localStorage.getItem('queryFilms') : localStorage.getItem('queryFilmsSaved')
-    );
+    setValue('queryFilms', pathname === '/movies' ? localStorage.getItem('queryFilms') : '');
   }, [pathname]);
 
   return (

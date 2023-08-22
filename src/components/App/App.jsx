@@ -34,8 +34,7 @@ export default function App() {
     localStorage.removeItem('queryFilms');
     localStorage.removeItem('isShortFilms');
     localStorage.removeItem('isLogin');
-    localStorage.removeItem('queryFilmsSaved');
-    localStorage.removeItem('isShortFilmsSaved');
+    localStorage.removeItem('filmsSaved');
     setIsLogin(false);
     navigate('/');
   };

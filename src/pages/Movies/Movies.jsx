@@ -17,9 +17,7 @@ export default function Movies() {
   const [checkShortFilms, setCheckShortFilms] = useState(
     JSON.parse(localStorage.getItem('isShortFilms')) || false
   );
-  const [checkShortFilmsSaved, setCheckShortFilmsSaved] = useState(
-    JSON.parse(localStorage.getItem('isShortFilmsSaved')) || false
-  );
+  const [checkShortFilmsSaved, setCheckShortFilmsSaved] = useState(false);
   const [isNothingFound, setIsNothingFound] = useState(false);
   const [serverError, setServerError] = useState('');
   const [serverErrorModal, setServerErrorModal] = useState('');
@@ -29,6 +27,7 @@ export default function Movies() {
   const { isMediumScreen, isLargeScreen } = useResize();
   const limit = isLargeScreen ? 4 : isMediumScreen ? 2 : 1;
   const [count, setCount] = useState(limit);
+  const [queryFilmsSaved, setQueryFilmsSaved] = useState('');
 
   const handleSetCount = (count) => {
     setCount(count);
@@ -57,12 +56,12 @@ export default function Movies() {
 
     if (pathname === '/movies') {
       filmsData = JSON.parse(localStorage.getItem('films'));
-      const searchFilmsData = searchFilms(filmsData, query, checkShortFilms, checkShortFilmsSaved);
+      const searchFilmsData = searchFilms(filmsData, query, checkShortFilms, false);
 
       setFilms(searchFilmsData);
     } else {
-      filmsData = filmsSaved;
-      const searchFilmsData = searchFilms(filmsData, query, checkShortFilms, checkShortFilmsSaved);
+      filmsData = JSON.parse(localStorage.getItem('filmsSaved'));
+      const searchFilmsData = searchFilms(filmsData, query, false, checkShortFilmsSaved);
 
       setFilmsSavedSearch(searchFilmsData);
     }
@@ -74,20 +73,21 @@ export default function Movies() {
       localStorage.setItem('isShortFilms', !checkShortFilms);
       setCheckShortFilms(!checkShortFilms);
     } else {
-      localStorage.setItem('queryFilmsSaved', query);
-      localStorage.setItem('isShortFilmsSaved', !checkShortFilmsSaved);
+      handleSetFilms(query);
+      setQueryFilmsSaved(query);
       setCheckShortFilmsSaved(!checkShortFilmsSaved);
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem('queryFilms')) {
-      handleSetFilms(localStorage.getItem('queryFilms') || '');
+      handleSetFilms(localStorage.getItem('queryFilms') || null);
+      setIsNothingFound(true);
     }
   }, [checkShortFilms]);
 
   useEffect(() => {
-    handleSetFilms(localStorage.getItem('queryFilmsSaved'));
+    handleSetFilms(queryFilmsSaved);
   }, [checkShortFilmsSaved]);
 
   useEffect(() => {
@@ -95,16 +95,30 @@ export default function Movies() {
   }, [films]);
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('isShortFilmsSaved'))) {
-      handleSetFilms(localStorage.getItem('queryFilmsSaved'));
+    localStorage.setItem('filmsSaved', JSON.stringify(filmsSaved));
+    if (pathname === '/saved-movies') {
+      handleSetFilms(queryFilmsSaved);
     }
   }, [filmsSaved]);
 
   useEffect(() => {
-    if (pathname === '/saved-movies' && !localStorage.getItem('isShortFilmsSaved')) {
-      handleSetFilms(localStorage.getItem(''));
+    if (pathname === '/movies') {
+      handleSetFilms(localStorage.getItem('queryFilms'));
+    }
+    if (pathname === '/saved-movies') {
+      handleSetFilms('');
     }
   }, [pathname]);
+
+  useEffect(() => {
+    if (!localStorage.getItem('films')) {
+      localStorage.setItem('films', JSON.stringify([]));
+    }
+
+    if (!localStorage.getItem('filmsSaved')) {
+      localStorage.setItem('filmsSaved', JSON.stringify([]));
+    }
+  }, []);
 
   return (
     <>
