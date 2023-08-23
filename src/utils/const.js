@@ -97,4 +97,6 @@ const FILMS = [
   },
 ];
 
-export { FILMS };
+const URL = 'https://api.beatfilms.mvtt.nomoreparties.co';
+
+export { FILMS, URL };

@@ -19,7 +19,7 @@
   gap: 16px;
 }
 
-.header__link{
+.header__link {
   color: #000;
   font-size: 13px;
   font-style: normal;
@@ -27,8 +27,13 @@
   line-height: 138%;
 }
 
-.header__link_active{
+.header__link_active {
   font-weight: 500;
+  cursor: auto;
+}
+
+.header__link_active:hover {
+  opacity: 1;
 }
 
 .header__link_type_registry {

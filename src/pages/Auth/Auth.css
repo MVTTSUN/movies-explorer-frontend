@@ -18,7 +18,6 @@
   flex: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .auth__label {
@@ -62,6 +61,15 @@
   line-height: normal;
   border-radius: 3px;
   background: #FF6838;
+}
+
+.auth__button:disabled {
+  cursor: auto;
+  background: #A0A0A0;
+}
+
+.auth__button:disabled:hover {
+  opacity: 1;
 }
 
 .auth__link-wrapper {
